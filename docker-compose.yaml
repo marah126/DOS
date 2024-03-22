@@ -1,0 +1,30 @@
+version: "3"
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+
+  catalog:
+    build: ./catalog_service
+    container_name: catalog
+    ports:
+      - "3002:3002"
+
+  order:
+    build: ./order_service
+    container_name: order
+    ports:
+      - "3003:3003"
+
+  frontend:
+    build: ./frontend_service
+    container_name: frontend
+    ports:
+      - "3001:3001"
+    depends_on:
+      - catalog
+      - order
