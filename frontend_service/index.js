@@ -40,11 +40,12 @@ app.use('/bazar/info/:id', (req, res) => {
     });
 });
 
-app.use('/bazar/purchase', (req, res) => {
-  const urlPath = req.url;
-  const orderPath = '/order';
+app.use('/bazar/purchase/:id', (req, res) => {
+  const id = req.params.id;
+  console.log("from frontend server with id : "+id);
+  const orderPath = `/order/purchase/${id}`;
 
-  const orderUrl = `http://order:3003${urlPath}`;
+  const orderUrl = `http://order:3003${orderPath}`;
 
   // Forward the request to the order service
   axios.post(orderUrl, req.body)
