@@ -18,7 +18,7 @@ WORKDIR /home/microservices/catalog_service
 COPY package*.json ./
 
 # Install dependencies including express and axios
-RUN npm install express axios
+RUN npm install express axios fs csv-parser
 
 # Install other dependencies
 RUN npm install
