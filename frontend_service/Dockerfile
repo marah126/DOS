@@ -18,7 +18,7 @@ WORKDIR /home/microservices/frontEnd_service
 COPY package*.json ./
 
 # Install dependencies including express and axios
-RUN npm install express axios
+RUN npm install express axios nodemon
 
 # Install other dependencies
 RUN npm install
@@ -30,5 +30,5 @@ COPY . .
 EXPOSE 3001
 
 # Command to run the application
-CMD node index.js
+CMD npx nodemon index.js
 

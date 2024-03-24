@@ -13,18 +13,24 @@ services:
     container_name: catalog
     ports:
       - "3002:3002"
+    volumes:
+      - ./catalog_service:/home/microservices/catalog_service
 
   order:
     build: ./order_service
     container_name: order
     ports:
       - "3003:3003"
+    volumes:
+      - ./order_service:/home/microservices/order_service
 
   frontend:
     build: ./frontend_service
     container_name: frontend
     ports:
       - "3001:3001"
+    volumes:
+      - ./frontend_service:/home/microservices/frontEnd_service
     depends_on:
       - catalog
       - order
