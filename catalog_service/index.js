@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const csv = require('csv-parser');
+const { resolve } = require('path');
 const app = express();
 const port = 3002;
 
@@ -112,14 +113,14 @@ app.get('/catalog/search/:type', async (req, res) => {
   const type = req.params.type;
   try {
     const foundbooks = await searchBooks(type);
-    if(foundbooks.length==0){
-      res.json({message:'No books found for the specified topic'});
+    if (foundbooks.length == 0) {
+      res.json({ message: 'No books found for the specified topic' });
     }
-    else{
+    else {
       res.json(foundbooks);
     }
     console.log(foundbooks);
-    
+
   } catch (error) {
     console.error('Error searching books:', error);
     res.status(500).send('Error searching books');
