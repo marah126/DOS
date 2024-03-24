@@ -81,6 +81,29 @@ function reduceQuantity(id) {
   });
 }
 
+
+function BookInfo(ID) {
+  return new Promise((resolve, reject) => {
+    const books = [];
+    fs.createReadStream('book.csv')
+      .pipe(csv())
+      .on('data', (row) => {
+        if (row.ID == ID) {
+          console.log("found book");
+          books.push({ Id: row.ID, Title: row.Title, Quantity: row.Quantity, Price: row.Price, Topic: row.Topic });
+        }
+      })
+      .on('end', () => {
+        console.log('CSV file successfully processed');
+        resolve(books); // Resolve with the result
+      })
+      .on('error', (error) => {
+        console.error('Error reading CSV file:', error);
+        reject(error); // Reject in case of an error
+      });
+  })
+}
+
 app.get('/', (req, res) => {
   res.send('Hello from catalog!');
 });
@@ -106,8 +129,22 @@ app.get('/catalog/search/:type', async (req, res) => {
 app.get('/catalog/info/:id',async (req, res) => {
   const id = req.params.id;
   console.log(book);
+  try {
+    const foundbooks = await BookInfo(id);
+    if (foundbooks.length == 0) {
+      res.send(`No book for this ID ${id}`);
+    }
+    else {
+      res.json(foundbooks);
+    }
+    console.log(foundbooks);
 
-  res.send(`This is the catalog info API endpoint for ID: ${id}`);
+  }
+  catch (error) {
+    console.error('Error searching books:', error);
+    res.status(500).send('Error searching books');
+  }
+
 });
 
 app.get('/catalog/item/:id',async (req, res) => {
