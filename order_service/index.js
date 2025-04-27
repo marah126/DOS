@@ -9,10 +9,15 @@ const fs = require('fs');
 const csvFileName = 'orders.csv';
 
 function writeToCSV(data, fileName) {
-
+  console.log("inside write function");
   const csvData = `${data.book_id},${data.book_name},${data.timestamp}\n`;
 
-  fs.appendFileSync(fileName, csvData);
+  try {
+    fs.appendFileSync(fileName, csvData);
+    console.log("File updated successfully!");
+  } catch (error) {
+    console.error("Error writing to file:", error);
+  }
 }
 
 const dataToAppend = [
@@ -55,7 +60,7 @@ app.post('/order/purchase/:id', (req, res) => {
           });
       } else {
         console.log("not hi");
-        res.status(400).send('Purchase failed: Item is out of stock');
+        res.send('Purchase failed: Item is out of stock');
       }
     }else{
       res.send(`No books for this ID ${id}`);

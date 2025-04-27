@@ -129,7 +129,6 @@ app.get('/catalog/search/:type', async (req, res) => {
 
 app.get('/catalog/info/:id',async (req, res) => {
   const id = req.params.id;
-  console.log(book);
   try {
     const foundbooks = await BookInfo(id);
     if (foundbooks.length == 0) {

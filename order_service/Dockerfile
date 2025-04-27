@@ -18,7 +18,7 @@ WORKDIR /home/microservices/order_service
 COPY package*.json ./
 
 # Install dependencies including express and axios
-RUN npm install express axios nodemon
+RUN npm install express axios fs csv-parser nodemon
 
 # Install other dependencies
 RUN npm install
@@ -32,4 +32,4 @@ COPY . .
 EXPOSE 3003
 
 # Command to run the application
-CMD npx nodemon index.js
+CMD node index.js
